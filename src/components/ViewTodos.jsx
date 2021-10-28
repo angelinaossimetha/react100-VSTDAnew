@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import AddTodo from './AddTodo';
+import TodoList from './TodoList';
 /* 
     1. When there are NO todos => Static message
     2. Otherwise TodoList Component 
@@ -18,6 +19,10 @@ class ViewTodos extends Component {
             '2': "danger"
         }
         this.addTodo = this.addTodo.bind(this);
+        this.editTodo = this.editTodo.bind(this);
+        this.deleteTodo = this.deleteTodo.bind(this);
+        this.submitEdit = this.submitEdit.bind(this); 
+        this.toggleCompleted = this.toggleCompleted.bind(this); 
     }
 
     addTodo(description, priority, id) {
@@ -32,6 +37,52 @@ class ViewTodos extends Component {
         this.state.todos.push(newTodo);
     }
 
+    editTodo(id) {
+        // let todosTemp = [...this.state.todos]; 
+
+        // let todo = todosTemp.find(item => item.id == id);
+        // todo.edit = !todo.edit; 
+        // this.setState({todos : todosTemp});
+        
+        
+
+        // console.log("todos:", typeof this.state.todos);
+        // console.log("id", id);
+
+        let todo = this.state.todos.find(item => item.id == id);
+        console.log("todo", todo);
+        todo.edit = !todo.edit;
+
+      
+    }
+
+    submitEdit(updatedDescription, updatedPriority, id) {
+        let todo = this.state.todos.find(item => item.id == id);
+        todo.description = updatedDescription;
+        todo.priority = updatedPriority;
+        todo.edit = false;
+    }
+
+
+    deleteTodo(id) {
+        let newTodos = this.state.todos.filter(item => item.id != id); 
+        this.setState({ todos: newTodos});
+    }
+
+    toggleCompleted(id) {
+        // let todosTemp = [...this.state.todos]; 
+
+        // let todo = todosTemp.find(item => item.id == id);
+        // todo.completed = !todo.completed; 
+        // this.setState({todos : todosTemp}); 
+
+
+
+        let todo = this.state.todos.find(todo => todo.id == id);
+        todo.completed = !todo.completed;
+    }
+
+
 
     render() {
         return (
@@ -43,8 +94,21 @@ class ViewTodos extends Component {
                             addTodo={this.addTodo}
                         />
                     </div>
+                    <div className='col-md-8'>
+                        <div className='card'>
+                            <div className='card-body'>
+                                <div className='card-title'>View Todos</div>
+                                <TodoList
+                                    toggleCompleted={this.toggleCompleted}
+                                    todos={this.state.todos}
+                                    editTodo={this.editTodo}
+                                    deleteTodo={this.deleteTodo}
+                                    submitEdit={this.submitEdit}
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
 
 
