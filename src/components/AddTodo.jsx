@@ -8,7 +8,6 @@ class AddTodo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: 0,
             description: '',
             priority: '0'
         }
@@ -20,11 +19,10 @@ class AddTodo extends Component {
         this.setState({ [event.target.name]: event.target.value });
     }
 
-    onSubmit(event) {
+    onSubmit() {
         // event.preventDefault();
-        this.props.addTodo(this.state.description, this.state.priority, this.state.id);
-        let newId = this.state.id + 1;
-        this.setState({ description: '', priority: '0', id: newId });
+        // this.props.addTodo(this.state.description, this.state.priority, this.state.id);
+        // this.setState({ description: '', priority: '0', id: newId });
     }
 
     render() {
@@ -35,10 +33,11 @@ class AddTodo extends Component {
                     <div className='form-group'>
                         <label htmlFor='description'>I want to...</label>
                         <textarea
+                            name='description'
                             value={this.state.description}
                             onChange={this.handleChange}
                             className='create-todo-text'
-                            name='description'></textarea>
+                        ></textarea>
                         <label htmlFor='priority' style={{ paddingRight: '5px' }}> How much of a priority if this?</label>
                         <select
                             value={this.state.priority}
@@ -53,7 +52,8 @@ class AddTodo extends Component {
                         <button className='create-todo btn btn-success btn-block'
                             name='button'
                             type='submit'
-                            onSubmit={this.onSubmit}
+                            // onSubmit={this.onSubmit} 
+                            onClick={() => {this.props.addTodo(this.state.description, this.state.priority)}}
                         >Add</button>
                     </div>
                 </div>

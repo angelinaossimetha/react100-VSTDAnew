@@ -12,11 +12,12 @@ class ViewTodos extends Component {
         super(props);
         this.state = {
             todos: [],
-        }
-        let colors = {
-            '0': "success",
-            '1': "warning",
-            '2': "danger"
+            nextId: 0,
+            colors: {
+                1: "success",
+                2: "warning",
+                3: "danger"
+            },
         }
         this.addTodo = this.addTodo.bind(this);
         this.editTodo = this.editTodo.bind(this);
@@ -25,16 +26,19 @@ class ViewTodos extends Component {
         this.toggleCompleted = this.toggleCompleted.bind(this); 
     }
 
-    addTodo(description, priority, id) {
+    addTodo(description, priority) {
         let newTodo = {
-            id,
+            id: this.state.nextId,
             description,
             priority,
             completed: false,
             edit: false,
             color: this.state.colors[priority]
         }
+        let updateId = this.state.nextId + 1;
+        this.setState({nextId: updateId});
         this.state.todos.push(newTodo);
+        console.log(this.state.todos);
     }
 
     editTodo(id) {

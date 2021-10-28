@@ -19,7 +19,7 @@ class TodoItem extends Component {
     render() {
 
         let thisTodo;
-        condole.log(this.props);
+        // condole.log(this.props);
         if (this.props.edit) {
             thisTodo = (
                 <div>
