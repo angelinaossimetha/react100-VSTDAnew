@@ -19,41 +19,47 @@ class AddTodo extends Component {
         this.setState({ [event.target.name]: event.target.value });
     }
 
-    onSubmit() {
-        // event.preventDefault();
+    onSubmit(event) {
+        event.preventDefault();
         // this.props.addTodo(this.state.description, this.state.priority, this.state.id);
-        // this.setState({ description: '', priority: '0', id: newId });
+        // this.setState({ description: '', priority: '0' }); 
+        this.setState({ description: ''}); 
+        this.setState({priority: '0' }); 
+
     }
 
     render() {
         return (
-            <div className='card'>
-                <div className='card-body'>
-                    <div className='card-title'>Add a new Todo</div>
-                    <div className='form-group'>
-                        <label htmlFor='description'>I want to...</label>
-                        <textarea
-                            name='description'
-                            value={this.state.description}
-                            onChange={this.handleChange}
-                            className='create-todo-text'
-                        ></textarea>
-                        <label htmlFor='priority' style={{ paddingRight: '5px' }}> How much of a priority if this?</label>
-                        <select
-                            value={this.state.priority}
-                            name='priority'
-                            className='create-todo-priority'
-                            onChange={this.handleChange}>
-                            <option defaultValue>Select priority</option>
-                            <option value='1'>Low Priority</option>
-                            <option value='2'>Medium Priority</option>
-                            <option value='3'>High Priority</option>
-                        </select>
+            <div className='col-md-4'>
+                <div className="panel panel-default">
+                    <div className="panel-heading">Add New Todo</div>
+                    <div className='panel-body text-left'>
+                        <form onSubmit={this.onSubmit}>
+                            <h4 className="card-text">I want to..</h4>
+                            <textarea
+                                name='description'
+                                value={this.state.description}
+                                onChange={this.handleChange}
+                                className='create-todo-text'
+                            ></textarea>
+                            <h4 className="card-text">How much of a priority is this?</h4>
+                            <select
+                                value={this.state.priority}
+                                name='priority'
+                                className='create-todo-priority'
+                                onChange={this.handleChange}>
+                                <option value='0' defaultValue>Choose here</option>
+                                <option value='1'>Low Priority</option>
+                                <option value='2'>Medium Priority</option>
+                                <option value='3'>High Priority</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div className="panel-footer">
                         <button className='create-todo btn btn-success btn-block'
-                            name='button'
-                            type='submit'
-                            // onSubmit={this.onSubmit} 
-                            onClick={() => {this.props.addTodo(this.state.description, this.state.priority)}}
+                            type='button'
+                            onSubmit={this.onSubmit}
+                            onClick={() => { this.props.addTodo(this.state.description, this.state.priority) }}
                         >Add</button>
                     </div>
                 </div>

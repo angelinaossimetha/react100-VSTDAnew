@@ -15,7 +15,7 @@ class EditTodo extends Component {
             completed: this.props.completed,
         }
 
-        this.handleChange = this.handleChange(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(event) {
@@ -43,7 +43,7 @@ class EditTodo extends Component {
                             className='update-todo btn btn-success pull-right'
                             name='button'
                             type='submit'
-                            onClick={() => this.props.submitEdit(this.state.description, this.state.priority, this.props.id)}>Add
+                            onClick={() => this.props.submitEdit(this.state.description, this.state.priority, this.props.id)}>Save
                         </button>
                     </div>
                 </div>

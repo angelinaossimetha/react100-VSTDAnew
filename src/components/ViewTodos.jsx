@@ -14,16 +14,16 @@ class ViewTodos extends Component {
             todos: [],
             nextId: 0,
             colors: {
-                1: "success",
-                2: "warning",
-                3: "danger"
+                1: "alert alert-success",
+                2: "alert alert-warning",
+                3: "alert alert-danger"
             },
         }
         this.addTodo = this.addTodo.bind(this);
         this.editTodo = this.editTodo.bind(this);
         this.deleteTodo = this.deleteTodo.bind(this);
-        this.submitEdit = this.submitEdit.bind(this); 
-        this.toggleCompleted = this.toggleCompleted.bind(this); 
+        this.submitEdit = this.submitEdit.bind(this);
+        this.toggleCompleted = this.toggleCompleted.bind(this);
     }
 
     addTodo(description, priority) {
@@ -36,54 +36,41 @@ class ViewTodos extends Component {
             color: this.state.colors[priority]
         }
         let updateId = this.state.nextId + 1;
-        this.setState({nextId: updateId});
+        this.setState({ nextId: updateId });
         this.state.todos.push(newTodo);
         console.log(this.state.todos);
     }
 
     editTodo(id) {
-        // let todosTemp = [...this.state.todos]; 
-
-        // let todo = todosTemp.find(item => item.id == id);
-        // todo.edit = !todo.edit; 
-        // this.setState({todos : todosTemp});
-        
-        
-
-        // console.log("todos:", typeof this.state.todos);
-        // console.log("id", id);
-
-        let todo = this.state.todos.find(item => item.id == id);
-        console.log("todo", todo);
+        let todosTemp = [...this.state.todos];
+        let todo = todosTemp.find(item => item.id == id);
         todo.edit = !todo.edit;
+        this.setState({ todos: todosTemp });
 
-      
     }
 
     submitEdit(updatedDescription, updatedPriority, id) {
-        let todo = this.state.todos.find(item => item.id == id);
+        let todosTemp = [...this.state.todos];
+        let todo = todosTemp.find(item => item.id == id);
         todo.description = updatedDescription;
         todo.priority = updatedPriority;
+        todo.color = this.state.colors[updatedPriority];
         todo.edit = false;
+        this.setState({ todos: todosTemp });
     }
 
 
     deleteTodo(id) {
-        let newTodos = this.state.todos.filter(item => item.id != id); 
-        this.setState({ todos: newTodos});
+        let newTodos = this.state.todos.filter(item => item.id != id);
+        this.setState({ todos: newTodos });
     }
 
     toggleCompleted(id) {
-        // let todosTemp = [...this.state.todos]; 
+        let todosTemp = [...this.state.todos];
+        let todo = todosTemp.find(item => item.id == id);
+        todo.completed = !todo.completed; 
+        this.setState({ todos: todosTemp });
 
-        // let todo = todosTemp.find(item => item.id == id);
-        // todo.completed = !todo.completed; 
-        // this.setState({todos : todosTemp}); 
-
-
-
-        let todo = this.state.todos.find(todo => todo.id == id);
-        todo.completed = !todo.completed;
     }
 
 
@@ -93,15 +80,12 @@ class ViewTodos extends Component {
             <div className='container'>
                 <Header />
                 <div className='row'>
-                    <div className='col-md-4'>
-                        <AddTodo
-                            addTodo={this.addTodo}
-                        />
-                    </div>
+                    <AddTodo
+                        addTodo={this.addTodo}/>
                     <div className='col-md-8'>
-                        <div className='card'>
-                            <div className='card-body'>
-                                <div className='card-title'>View Todos</div>
+                        <div className='panel panel-default'>
+                            <div className='panel-heading'> View Todos</div>
+                            <div className="panel-body">
                                 <TodoList
                                     toggleCompleted={this.toggleCompleted}
                                     todos={this.state.todos}
@@ -114,16 +98,8 @@ class ViewTodos extends Component {
                     </div>
                 </div>
             </div>
-
-
-
-
         );
     }
-
-
-
-
 }
 
 export default ViewTodos;
