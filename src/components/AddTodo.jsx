@@ -12,19 +12,17 @@ class AddTodo extends Component {
             priority: '0'
         }
         this.handleChange = this.handleChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
     }
 
-    onSubmit(event) {
+    handleClick(event) {
         event.preventDefault();
-        // this.props.addTodo(this.state.description, this.state.priority, this.state.id);
-        // this.setState({ description: '', priority: '0' }); 
-        this.setState({ description: ''}); 
-        this.setState({priority: '0' }); 
+        this.props.addTodo(this.state.description, this.state.priority, this.props.id);
+        this.setState({ description: '', priority: '0' }); 
 
     }
 
@@ -48,7 +46,7 @@ class AddTodo extends Component {
                                 name='priority'
                                 className='create-todo-priority'
                                 onChange={this.handleChange}>
-                                <option value='0' defaultValue>Choose here</option>
+                                <option selected disabled>Choose priority</option> 
                                 <option value='1'>Low Priority</option>
                                 <option value='2'>Medium Priority</option>
                                 <option value='3'>High Priority</option>
@@ -58,8 +56,7 @@ class AddTodo extends Component {
                     <div className="panel-footer">
                         <button className='create-todo btn btn-success btn-block'
                             type='button'
-                            onSubmit={this.onSubmit}
-                            onClick={() => { this.props.addTodo(this.state.description, this.state.priority) }}
+                            onClick={this.handleClick}
                         >Add</button>
                     </div>
                 </div>
